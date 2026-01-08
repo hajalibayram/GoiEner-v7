@@ -1,0 +1,13 @@
+# Data directory
+data/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Package metadata
+*.egg-info/
+
+# Dot files
+.*
