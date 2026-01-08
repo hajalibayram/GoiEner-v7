@@ -3,10 +3,19 @@ name = "goiener-v7"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.10" # to be consistent with README.md
 dependencies = [
     "jupyterlab>=4.5.1",
     "pandas>=2.3.3",
     "polars>=1.36.1",
     "zstandard>=0.25.0",
+    "seaborn>=0.13.2", # used in tutorial.ipynb 
 ]
+
+# Specifies the build tools needed
+[build-system] 
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = {find = {exclude = ["data*", "simel*"]}}
