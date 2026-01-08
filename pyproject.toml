@@ -17,8 +17,5 @@ dependencies = [
 requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
-# Explicitly tells setuptools: "Don't automatically discover packages; there are no installable packages here."
-# Prevents setuptools from treating data/ and simel/ as packages.
-# thus avoids the error of "Multiple top-level packages discovered in a flat-layout: ['data', 'simel']"
-[tool.setuptools] 
-packages = []
+[tool.setuptools]
+packages = {find = {exclude = ["data*", "simel*"]}}
