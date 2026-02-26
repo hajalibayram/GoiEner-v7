@@ -1,7 +1,7 @@
 # Dataset Access & Usage Instructions
 
 This repository contains helpers and one-off scripts used to prepare and
-process the Goiener imputed household electricity dataset.
+process the imputed household electricity data in [GoiEner Smart Meter Dataset (Version 7)](https://zenodo.org/records/14949245). 
 
 ## 1. Access the original dataset
 
@@ -126,7 +126,7 @@ source .venv/bin/activate  # macOS / Linux (zsh / bash)
 pip install .
 ```
 
-Requirements: Python **>= 3.10** (project uses recent Polars features).
+Requirements: Python **>= 3.10** (project uses recent [Polars](https://github.com/pola-rs/polars) features).
 
 ## 6. Notes & safety
 
