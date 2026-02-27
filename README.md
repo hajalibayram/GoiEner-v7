@@ -72,18 +72,6 @@ python preprocessing.py
 python processing.py
 ```
 
-- `load_goiener_data.py`
-  - Purpose: A convenience script that normalizes metadata and merges
-    per-household CSVs. It implements the `clean(data_dir, file_name)`
-    function which extracts the archive (if not already extracted),
-    normalizes metadata, and merges household CSVs into
-    `data/household_kwh.csv`.
-  - Usage:
-
-```bash
-python load_goiener_data.py
-```
-
 - `extractors.py`
   - Purpose: Provides an `Extractor` helper to decompress `.tar.zst` files
     and safely extract the contained tar file into a destination directory.
