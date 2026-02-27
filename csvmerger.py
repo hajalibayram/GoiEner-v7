@@ -1,8 +1,32 @@
+"""csvmerger.py
+
+Utility for merging many per-id CSV files into a single CSV with an `id` column.
+
+Typical usage:
+    merger = CSVMerger(files_list, source_folder, output_file)
+    merger.combine_csv_files()
+
+If `files_list` is None or empty, the merger will gather all .csv files from
+`source_folder`.
+"""
+
 import csv
 import glob
 import os
 
 class CSVMerger:
+    """Merge multiple CSV files into a single CSV with an added `id` column.
+
+    Parameters
+    ----------
+    files_list : Sequence[str] | None
+        Optional explicit list of file paths to combine. If None or empty, the
+        `source_folder` will be scanned for .csv files.
+    source_folder : str | None
+        Folder to search for CSV files when `files_list` is not provided.
+    output_file : str
+        Path to the output CSV file to write.
+    """
     def __init__(self, files_list, source_folder, output_file):
         self._files = files_list
         self._source_folder = source_folder
@@ -11,6 +35,12 @@ class CSVMerger:
 
 
     def combine_csv_files(self):
+        """Combine CSV files into the configured output file.
+
+        The method will write headers from the first file and append an `id`
+        column (derived from each file's basename). Files that do not exist are
+        skipped silently.
+        """
         if self._files:
             csv_files = self._files
         else:

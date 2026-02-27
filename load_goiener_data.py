@@ -1,11 +1,41 @@
-from extractors import Extractor
-from csvmerger import CSVMerger
-from pathlib import Path
-import polars as pl
-from random import random
+"""load_goiener_data.py
+
+Helpers to extract, normalize and combine the Goiener dataset files.
+
+The `clean` function decompresses the provided imputed tar.zst archive (if
+needed), normalizes the metadata fields, filters households to the post-COVID
+subset used in downstream analysis, writes normalized metadata CSVs and
+merges individual household CSVs into `data/household_kwh.csv`.
+"""
+
 import argparse
+from pathlib import Path
+from random import random
+
+import polars as pl
+
+from csvmerger import CSVMerger
+from extractors import Extractor
+
 
 def clean(data_dir: str, file_name: str):
+    """Prepare and normalize Goiener data.
+
+    Steps performed:
+    - Decompress `file_name` under `data_dir` if the extracted folder does not
+      already exist.
+    - Normalize and coerce metadata fields (dates, numeric tiers, postal code)
+      and write `data/metadata_normalized.csv`.
+    - Select post-COVID households and write `data/metadata_post_covid_households.csv`.
+    - Merge per-household CSVs into `data/household_kwh.csv`.
+
+    Parameters
+    ----------
+    data_dir : str
+        Directory where the tar.zst and metadata files live (e.g. 'data').
+    file_name : str
+        The archive filename to extract (e.g. 'imputed_goiener_v7.tar.zst').
+    """
     # Extract tar file
     EXTRACTED_DIR = Path(data_dir, file_name.split('.')[0]) # imputed_goiener_v7
     METADATA = Path(data_dir, 'metadata.csv')

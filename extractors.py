@@ -1,10 +1,29 @@
-import tarfile
-import zstandard
+"""extractors.py
+
+Safe extraction helpers for compressed Goiener archives.
+
+Provides an Extractor class that decompresses .tar.zst archives and extracts the
+contained tar safely to a destination directory while preventing path-traversal
+attacks.
+"""
+
 import os
+import tarfile
 from pathlib import Path
+
+import zstandard
 
 
 class Extractor:
+    """Utility for decompressing .tar.zst archives and extracting them safely.
+
+    Parameters
+    ----------
+    file_path : str
+        Path to the .tar.zst file to decompress.
+    dataset_dest_dir : str
+        Destination directory where the tar will be written and extracted.
+    """
     def __init__(self, file_path: str, dataset_dest_dir:str):
         self._file_path = file_path
         self._destination = dataset_dest_dir
@@ -20,6 +39,12 @@ class Extractor:
         return member  # Allow extraction
 
     def decompress_tzst(self):
+        """Decompress the .tar.zst archive and extract its content.
+
+        The method creates a temporary tar file adjacent to the destination and
+        uses zstandard to decompress into it. The resulting tar is opened and
+        extracted with a safety filter to avoid path traversal.
+        """
         input_file = Path(self._file_path)
         tar_path = Path(self._destination, input_file.stem)
 
@@ -34,6 +59,4 @@ class Extractor:
             print("Extraction complete")
             return
         print("Extraction failed")
-
-
 
